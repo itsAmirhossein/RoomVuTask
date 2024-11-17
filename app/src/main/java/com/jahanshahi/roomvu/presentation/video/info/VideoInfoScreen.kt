@@ -1,4 +1,4 @@
-package com.jahanshahi.roomvu.presentation.video
+package com.jahanshahi.roomvu.presentation.video.info
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,12 +32,41 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.jahanshahi.roomvu.R
+import com.jahanshahi.roomvu.navigation.Screen
+import com.jahanshahi.roomvu.presentation.component.topbar.RoomVuTopBar
+import com.jahanshahi.roomvu.presentation.component.topbar.TopBarLeftActionButton
+import com.jahanshahi.roomvu.presentation.component.topbar.TopBarRightActionButton
+import com.jahanshahi.roomvu.presentation.component.topbar.TopBarTitle
 import com.jahanshahi.roomvu.ui.theme.Typography
 
 @Composable
-fun VideoInfoScreen(modifier: Modifier = Modifier) {
-    VideoItem(modifier = modifier)
+fun VideoInfoScreen(
+    navController: NavController,
+    modifier: Modifier = Modifier
+) {
+    Scaffold(
+        containerColor = Color(0xfff3f1f7),
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            RoomVuTopBar(
+                topBarTitle = TopBarTitle(
+                    text = "Video",
+                ),
+                topBarLeftActionButton = TopBarLeftActionButton.BACK_BUTTON,
+                onLeftActionButtonClick = {
+                    navController.navigateUp()
+                },
+                topBarRightActionButton = TopBarRightActionButton.MORE_ACTION_BUTTON,
+                onRightActionButtonClick = {
+                    navController.navigate(Screen.VideoEditScreen.route)
+                }
+            )
+        },
+    ) { innerPadding ->
+        VideoItem(modifier = modifier.then(Modifier.padding(innerPadding)))
+    }
 }
 
 @Composable
@@ -56,7 +86,8 @@ fun VideoItem(modifier: Modifier = Modifier) {
         )
         Spacer(modifier = Modifier.height(12.dp))
         Card(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .height(200.dp)
                 .padding(horizontal = 16.dp),
             shape = RoundedCornerShape(4.dp),

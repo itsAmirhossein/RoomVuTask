@@ -6,26 +6,27 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.jahanshahi.roomvu.presentation.video.VideoInfoScreen
+import com.jahanshahi.roomvu.presentation.video.edit.VideoEditScreen
+import com.jahanshahi.roomvu.presentation.video.info.VideoInfoScreen
 
 @Composable
 fun SetupNavigationHost(
     navController: NavHostController,
-    modifier: Modifier = Modifier,
 ) {
     NavHost(
-        modifier = modifier,
         navController = navController,
         startDestination = Screen.VideoScreen.route
     ) {
         composable(route = Screen.VideoScreen.route) {
             VideoInfoScreen(
+                navController = navController,
                 modifier = Modifier.fillMaxSize()
             )
         }
-        //Bottom Navigation
         composable(route = Screen.VideoEditScreen.route) {
-            //TODO
+            VideoEditScreen(
+                navController = navController,
+            )
         }
     }
 }
