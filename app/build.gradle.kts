@@ -23,7 +23,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "ROOM_VU_BASE_URL", "\"https://www.roomvu.com/api/v1/dev/\"")
+        }
         release {
+            buildConfigField("String", "ROOM_VU_BASE_URL", "\"https://www.roomvu.com/api/v1/dev/\"")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -40,6 +44,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.13"
@@ -69,6 +74,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    //Kotlin Reflect
+    implementation(libs.kotlin.reflect)
+
     //Navigation
     implementation(libs.compose.navigation)
 
@@ -77,8 +85,6 @@ dependencies {
     ksp(libs.hilt.android.compiler)
     implementation(libs.hilt.navigation.compose)
     ksp(libs.hilt.compiler)
-
-
 
     //Gson
     implementation(libs.gson)
@@ -92,9 +98,16 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson.convertor)
 
+    //Exo Player & Media 3
+    implementation(libs.exo.player)
+    implementation(libs.media3)
+
     //Coil
-    implementation(libs.coil)
+    implementation(libs.coil.compose)
 
     //Accompanist System UI Controller
     implementation(libs.accompanist.systemuicontroller)
+
+    //Shimmer Effect
+    implementation(libs.shimmer.effect)
 }

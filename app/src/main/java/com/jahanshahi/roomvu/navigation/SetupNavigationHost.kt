@@ -4,10 +4,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.jahanshahi.roomvu.presentation.video.edit.VideoEditScreen
-import com.jahanshahi.roomvu.presentation.video.info.VideoInfoScreen
+import androidx.navigation.navArgument
+import com.jahanshahi.roomvu.features.video.edit.VideoEditScreen
+import com.jahanshahi.roomvu.features.video.info.VideoInfoScreen
 
 @Composable
 fun SetupNavigationHost(
@@ -15,17 +17,26 @@ fun SetupNavigationHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.VideoScreen.route
+        startDestination = Screen.VideoInfoScreen.route
     ) {
-        composable(route = Screen.VideoScreen.route) {
+        composable(route = Screen.VideoInfoScreen.route) {
             VideoInfoScreen(
                 navController = navController,
                 modifier = Modifier.fillMaxSize()
             )
         }
-        composable(route = Screen.VideoEditScreen.route) {
+        composable(route = Screen.VideoEditScreen.route,
+            arguments = listOf(
+                navArgument("title") { type = NavType.StringType },
+                navArgument("description") { type = NavType.StringType }
+            )
+        ) {backStackEntry->
+            val title = backStackEntry.arguments?.getString("title") ?: ""
+            val description = backStackEntry.arguments?.getString("description") ?: ""
             VideoEditScreen(
                 navController = navController,
+                initialTitle = title,
+                initialDescription = description,
             )
         }
     }

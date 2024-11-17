@@ -19,6 +19,8 @@ okhttp-bom-version = "4.9.0"
 retrofit-version = "2.9.0"
 coil-version = "2.6.0"
 accompanist-systemuicontroller-version = "0.27.0"
+exo-player-version = "1.4.1"
+shimmer-effect-version = "1.3.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,6 +37,9 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+
+#Kotlin Reflect
+kotlin-reflect = {group="org.jetbrains.kotlin",name="kotlin-reflect"}
 
 #Navigation
 compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-version" }
@@ -58,11 +63,18 @@ okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-i
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit-version" }
 retrofit-gson-convertor = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit-version" }
 
+#Exo Player
+exo-player = {group="androidx.media3",name="media3-exoplayer",version.ref="exo-player-version"}
+media3 = {group="androidx.media3",name="media3-ui",version.ref="exo-player-version"}
+
 #Coil
-coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil-version" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil-version" }
 
 #Accompanist System UI Controller
 accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist-systemuicontroller-version" }
+
+#Shimmer Effect
+shimmer-effect = {group="com.valentinilk.shimmer",name="compose-shimmer",version.ref = "shimmer-effect-version"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

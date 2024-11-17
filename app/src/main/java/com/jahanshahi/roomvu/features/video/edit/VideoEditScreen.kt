@@ -1,5 +1,7 @@
-package com.jahanshahi.roomvu.presentation.video.edit
+package com.jahanshahi.roomvu.features.video.edit
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,31 +16,70 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.jahanshahi.roomvu.domain.video.entity.VideoEntity
 import com.jahanshahi.roomvu.presentation.component.topbar.RoomVuTopBar
 import com.jahanshahi.roomvu.presentation.component.topbar.TopBarLeftActionButton
 import com.jahanshahi.roomvu.presentation.component.topbar.TopBarRightActionButton
 import com.jahanshahi.roomvu.presentation.component.topbar.TopBarTitle
+import com.jahanshahi.roomvu.presentation.video.entity.UpdateVideoView
+import com.jahanshahi.roomvu.presentation.video.entity.VideoView
 import com.jahanshahi.roomvu.ui.theme.Typography
+import com.sample.domain.core.entity.onAnyError
+import com.sample.domain.core.entity.onLoading
+import com.sample.domain.core.entity.onSuccess
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun VideoEditScreen(
+    viewModel: VideoEditViewModel = hiltViewModel(),
     navController: NavController,
+    initialTitle: String,
+    initialDescription:String,
 ) {
+    val context = LocalContext.current
+    var title by remember {
+        mutableStateOf(initialTitle)
+    }
+    var description by remember {
+        mutableStateOf(initialDescription)
+    }
+    val video = viewModel.video
+    LaunchedEffect(video) {
+        video.collectLatest {
+            it.run {
+                onSuccess { _ ->
+                    Toast.makeText(context, "Video updated!", Toast.LENGTH_SHORT).show()
+                    navController.navigateUp()
+                }
+                onAnyError { _, s ->
+                    Log.e(
+                        "Error",
+                        "Video Edit Screen -> video state error: ${s.orEmpty()}"
+                    )
+                }
+                onLoading {}
+            }
+        }
+    }
     Scaffold(
         containerColor = Color(0xfff3f1f7),
         modifier = Modifier.fillMaxSize(),
         topBar = {
             RoomVuTopBar(
+                navController = navController,
                 topBarTitle = TopBarTitle(
                     text = "Edit",
                 ),
@@ -48,8 +89,13 @@ fun VideoEditScreen(
                 },
                 topBarRightActionButton = TopBarRightActionButton.SAVE_ACTION_BUTTON,
                 onRightActionButtonClick = {
-                    //TODO
-                }
+                    viewModel.updateVideo(
+                        UpdateVideoView(
+                            title = title,
+                            description = title,
+                        )
+                    )
+                },
             )
         },
     ) { innerPadding ->
@@ -62,23 +108,28 @@ fun VideoEditScreen(
             EditTitleLayout(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(16.dp),
+                titleText = title,
+                onTitleTextChanged = {
+                    title = it
+                }
             )
             Spacer(modifier = Modifier.height(16.dp))
-            EditContentLayout(
+            EditDescriptionLayout(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(16.dp),
+                descriptionText = description,
+                onDescriptionTextChange = {
+                    description = it
+                }
             )
         }
     }
 }
 
 @Composable
-fun EditTitleLayout(modifier: Modifier = Modifier) {
-    var titleText by remember {
-        mutableStateOf("Title")
-    }
+fun EditTitleLayout(modifier: Modifier = Modifier,titleText:String,onTitleTextChanged:(String)->Unit) {
     Column(
         modifier = modifier,
     ) {
@@ -102,7 +153,7 @@ fun EditTitleLayout(modifier: Modifier = Modifier) {
             TextField(
                 value = titleText,
                 onValueChange = {
-                    titleText = it
+                    onTitleTextChanged(it)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -124,10 +175,7 @@ fun EditTitleLayout(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun EditContentLayout(modifier: Modifier = Modifier) {
-    var contentText by remember {
-        mutableStateOf("#hashtag#hashtag#hashtag#hashtag#hashtag#hashtag#hashtag#hashtag#hashtag#hashtag#hashtag#hashtag#hashtag")
-    }
+fun EditDescriptionLayout(modifier: Modifier = Modifier,descriptionText:String,onDescriptionTextChange:(String)->Unit) {
     Column(
         modifier = modifier,
     ) {
@@ -149,9 +197,9 @@ fun EditContentLayout(modifier: Modifier = Modifier) {
             shape = RoundedCornerShape(4.dp)
         ) {
             TextField(
-                value = contentText,
+                value = descriptionText,
                 onValueChange = {
-                    contentText = it
+                    onDescriptionTextChange(it)
                 },
                 minLines = 5,
                 modifier = Modifier

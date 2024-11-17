@@ -9,7 +9,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.jahanshahi.roomvu.navigation.SetupNavigationHost
 import com.jahanshahi.roomvu.ui.theme.RoomVuTheme
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
