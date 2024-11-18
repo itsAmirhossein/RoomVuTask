@@ -1,4 +1,4 @@
-package com.jahanshahi.roomvu.features.video.info
+package com.jahanshahi.roomvu.features.video.info.screen
 
 import android.content.Context
 import androidx.annotation.OptIn

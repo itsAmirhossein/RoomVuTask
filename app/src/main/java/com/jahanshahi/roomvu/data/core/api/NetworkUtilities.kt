@@ -1,8 +1,5 @@
 package com.jahanshahi.roomvu.data.core.api
 
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.sample.data.core.webApi.response.BaseResponse
 import retrofit2.HttpException
 import retrofit2.Response
 

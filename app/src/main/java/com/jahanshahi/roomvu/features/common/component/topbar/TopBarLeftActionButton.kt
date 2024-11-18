@@ -1,4 +1,4 @@
-package com.jahanshahi.roomvu.presentation.component.topbar
+package com.jahanshahi.roomvu.features.common.component.topbar
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp

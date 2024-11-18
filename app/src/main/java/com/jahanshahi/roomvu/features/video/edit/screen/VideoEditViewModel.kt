@@ -1,4 +1,4 @@
-package com.jahanshahi.roomvu.features.video.edit
+package com.jahanshahi.roomvu.features.video.edit.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

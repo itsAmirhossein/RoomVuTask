@@ -1,4 +1,4 @@
-package com.jahanshahi.roomvu.presentation.component.topbar
+package com.jahanshahi.roomvu.features.common.component.topbar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -49,6 +49,7 @@ fun RoomVuTopBar(
     onIsPopUpMenuExpandedChange: (Boolean) -> Unit = {},
     title: String = "",
     description: String = "",
+    factor: Float,
 ) {
     var isShowDeleteDialog by remember { mutableStateOf(false) }
     Box(modifier = Modifier
@@ -203,6 +204,7 @@ fun RoomVuTopBar(
                                 },
                                 title = title,
                                 description = description,
+                                factor = factor,
                             )
                         }
 
@@ -231,6 +233,7 @@ fun VideoInfoPopUpMenu(
     onIsShowDeleteDialogChange: (Boolean) -> Unit,
     title: String,
     description: String,
+    factor:Float
 ) {
     DropdownMenu(
         containerColor = Color.White,
@@ -245,14 +248,14 @@ fun VideoInfoPopUpMenu(
                     text = "Edit",
                     style = TextStyle(
                         fontFamily = Typography.bodyLarge.fontFamily,
-                        fontSize = 14.sp,
+                        fontSize = (14*factor).sp,
                         color = Color.Black,
                     ),
                 )
             },
             onClick = {
                 onIsPopUpMenuExpandedChange(false)
-                navController.navigate(Screen.VideoEditScreen.route.replace("{title",title).replace("{description}",description))
+                navController.navigate(Screen.VideoEditScreen.route.replace("{title}",title).replace("{description}",description))
             })
         DropdownMenuItem(
             text = {
@@ -260,7 +263,7 @@ fun VideoInfoPopUpMenu(
                     text = "Connect more social media",
                     style = TextStyle(
                         fontFamily = Typography.bodyLarge.fontFamily,
-                        fontSize = 14.sp,
+                        fontSize = (14*factor).sp,
                         color = Color.Black,
                     ),
                 )
@@ -274,7 +277,7 @@ fun VideoInfoPopUpMenu(
                     text = "Delete",
                     style = TextStyle(
                         fontFamily = Typography.bodyLarge.fontFamily,
-                        fontSize = 14.sp,
+                        fontSize = (14*factor).sp,
                         color = Color.Black,
                     ),
                 )

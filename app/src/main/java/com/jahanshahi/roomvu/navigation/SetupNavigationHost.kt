@@ -8,8 +8,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.jahanshahi.roomvu.features.video.edit.VideoEditScreen
-import com.jahanshahi.roomvu.features.video.info.VideoInfoScreen
+import com.jahanshahi.roomvu.features.video.edit.screen.VideoEditScreen
+import com.jahanshahi.roomvu.features.video.info.screen.VideoInfoScreen
 
 @Composable
 fun SetupNavigationHost(

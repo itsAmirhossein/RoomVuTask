@@ -1,6 +1,6 @@
 package com.jahanshahi.roomvu.navigation
 
-import com.jahanshahi.roomvu.presentation.component.topbar.TopBarTitle
+import com.jahanshahi.roomvu.features.common.component.topbar.TopBarTitle
 
 sealed class Screen(val route : String){
     data object VideoInfoScreen: Screen("video_info_screen")
